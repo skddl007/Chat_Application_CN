@@ -77,6 +77,9 @@ Messages are plain UTF-8 text over TCP.
 - [23:04:55] [23:04] Sandeep: Are you Happy😊
 - [23:15:05] [23:15] Shivam: I think you feel happy😊
 - [23:16:14] [23:16] Shivam: Its thoughtful game🧠
+
+
+
 - **Server events**: server appends join/leave/start events to `Server/server_log.txt` with timestamps.
 - [22:38:29] Chat server started on the Port:- 8000
 - [22:39:37] Client Connected:- ('127.0.0.1', 12732)
@@ -104,3 +107,4 @@ Messages are plain UTF-8 text over TCP.
   To chat across multiple machines, update the client IP to the server machine’s LAN IP.
 
 - Messages are read using `recv(1024)`, so extremely long single messages could be split at the TCP level (typical for simple assignments).
+
