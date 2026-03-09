@@ -74,7 +74,17 @@ Messages are plain UTF-8 text over TCP.
 ## Logging / persistence (extra credit)
 
 - **Chat history**: server appends messages to `Server/chat_history.txt` with timestamps.
+- [23:04:55] [23:04] Sandeep: Are you Happy😊
+- [23:15:05] [23:15] Shivam: I think you feel happy😊
+- [23:16:14] [23:16] Shivam: Its thoughtful game🧠
 - **Server events**: server appends join/leave/start events to `Server/server_log.txt` with timestamps.
+- [22:38:29] Chat server started on the Port:- 8000
+- [22:39:37] Client Connected:- ('127.0.0.1', 12732)
+- [22:39:37] ## Sandeep joined the chat ##
+- [22:40:06] Client Connected:- ('127.0.0.1', 8959)
+- [22:40:06] ## Gaurav joined the chat ##
+- [22:40:50] Client Connected:- ('127.0.0.1', 11801)
+- [22:40:50] ## Shivam joined the chat ##
 
 ## Testing checklist (as required)
 
@@ -92,4 +102,5 @@ Messages are plain UTF-8 text over TCP.
   - server: `0.0.0.0:8000`
   - client: `127.0.0.1:8000`
   To chat across multiple machines, update the client IP to the server machine’s LAN IP.
+
 - Messages are read using `recv(1024)`, so extremely long single messages could be split at the TCP level (typical for simple assignments).
