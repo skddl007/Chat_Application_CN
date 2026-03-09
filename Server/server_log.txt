@@ -1,0 +1,23 @@
+[22:38:29] Chat server started on the Port:- 8000
+[22:39:37] Client Connected:- ('127.0.0.1', 12732)
+[22:39:37] ## Sandeep joined the chat ##
+[22:40:06] Client Connected:- ('127.0.0.1', 8959)
+[22:40:06] ## Gaurav joined the chat ##
+[22:40:50] Client Connected:- ('127.0.0.1', 11801)
+[22:40:50] ## Shivam joined the chat ##
+[22:47:47] Chat server started on the Port:- 8000
+[22:48:40] Client Connected:- ('127.0.0.1', 3658)
+[22:48:40] ## Sandeep joined the chat ##
+[22:48:56] Client Connected:- ('127.0.0.1', 14972)
+[22:48:56] ## Gaurav joined the chat ##
+[22:49:11] Client Connected:- ('127.0.0.1', 1046)
+[22:49:11] ## Shivam joined the chat ##
+[23:10:53] ## Sandeep left the chat ##
+[23:12:48] ## Shivam left the chat ##
+[23:12:59] ## Gaurav left the chat ##
+[23:13:57] Chat server started on the Port:- 8000
+[23:14:08] Client Connected:- ('127.0.0.1', 3706)
+[23:14:08] ## Sandeep joined the chat ##
+[23:14:24] Client Connected:- ('127.0.0.1', 3708)
+[23:14:24] ## Shivam joined the chat ##
+[23:32:19] ## Shivam left the chat ##
