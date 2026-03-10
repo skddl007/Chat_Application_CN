@@ -1,110 +1,165 @@
-# Simple Chat Application (TCP Sockets)
+Simple Chat Application using TCP Sockets
 
-Multi-client chat application built with **Python TCP sockets**. It uses a **central server** that accepts multiple clients concurrently and **broadcasts** chat messages to all connected users.
+This project is a basic multi-client chat application created using Python and TCP sockets.
+A central server manages the communication, and multiple clients can connect to it at the same time. When a user sends a message, the server receives it and forwards it to all other connected clients.
 
-## Features (mapped to assignment requirements)
+The goal of this project is to demonstrate how socket programming can be used to build a simple real-time communication system.
 
-- **Multi-client server (10+ clients)**: Server listens with a backlog of `10` and spawns a thread per client.
-- **Usernames + join/leave notifications**: Clients send `JOIN <username>`; server broadcasts join/leave events.
-- **Broadcast messaging**: `MSG <text>` from one client is delivered to all other connected clients.
-- **Graceful disconnect handling**: Server removes users on `QUIT` or unexpected disconnect.
-- **Reliable, ordered delivery**: Uses TCP.
+Main Features
 
-## Project structure
+Multiple Clients Support
+The server can handle several clients at the same time. It listens for incoming connections and creates a separate thread for each connected client.
 
-- `Server/server.py`: Chat server (thread-per-client).
-- `Client/client.py`: Chat client (one thread for receiving + main thread for sending).
-- `Server/chat_history.txt`: Persisted chat messages (created/updated by server).
-- `Server/server_log.txt`: Server event log (created/updated by server).
+Usernames and Join/Leave Messages
+When a client joins the chat, they provide a username. The server informs all other users when someone joins or leaves the chat.
 
-## Requirements
+Message Broadcasting
+Any message sent by a client is received by the server and then forwarded to all other connected clients.
 
-- Python 3.x
-- No external libraries (standard library only)
+Handling Client Disconnects
+If a user exits the chat or their connection drops, the server removes that user from the active list and informs other users.
 
-## How to run
+Reliable Communication
+Since the system uses TCP sockets, messages are delivered reliably and in order.
 
-### 1) Start the server
+Project Structure
 
-From the project root:
+The project is organized into two main folders:
 
-```bash
+Server
+
+server.py – runs the chat server and manages all clients
+
+chat_history.txt – stores chat messages with timestamps
+
+server_log.txt – records server activities such as connections and disconnections
+
+Client
+
+client.py – connects to the server and allows users to send and receive messages
+
+Requirements
+
+Python 3.x
+
+Only Python’s standard library is used (no external packages are required)
+
+How to Run the Application
+Start the Server
+
+Run the following command from the project directory:
+
 python Server/server.py
-```
 
-The server binds to `0.0.0.0:8000` (all interfaces) and runs until you stop it (Ctrl+C / close terminal).
+The server will start running on port 8000 and will wait for clients to connect.
 
-### 2) Start one or more clients
+Start the Client
 
-Open **multiple terminals** and run:
+Open a new terminal window and run:
 
-```bash
 python Client/client.py
-```
 
-Enter a username when prompted. If a username is already taken, the server replies with `Username is already taken.` (choose another and reconnect).
+Enter a username when prompted.
+You can open multiple terminals and start multiple clients to simulate a group chat.
 
-## Client commands
+If a username is already in use, the server will reject it and the user must reconnect with a different name.
 
-- **Send a chat message**: type anything and press Enter
-- **Quit**: `/quit` (client sends `QUIT` and exits)
-- **List users**: `/users` (client sends `USERS` and prints the server response)
+Client Commands
 
-## Application-layer protocol
+Inside the chat client:
 
-Messages are plain UTF-8 text over TCP.
+Send a message: simply type the message and press Enter
 
-- `JOIN <username>`
-- `MSG <message text>`
-- `QUIT`
-- `USERS` 
+Exit the chat: type /quit
 
-### Example exchange
+View connected users: type /users
 
-- Client → Server: `JOIN Sandeep`
-- Client → Server: `MSG Hello everyone!`
-- Client → Server: `USERS`
-- Client → Server: `QUIT`
+Communication Protocol
 
-## Concurrency design
+The client and server communicate using simple text messages over TCP.
+Some of the commands used between the client and server are:
 
-- **Server**: accepts connections in a loop and starts a **dedicated thread per client** (`threading.Thread`) to handle receive/parse/broadcast.
-- **Client**: runs a **receiver thread** to print messages in real time while the main thread reads user input and sends messages.
+JOIN <username> – used when a client connects
 
-## Logging / persistence (extra credit)
+MSG <message> – used to send a chat message
 
-- **Chat history**: server appends messages to `Server/chat_history.txt` with timestamps.
-- [23:04:55] [23:04] Sandeep: Are you Happy😊
-- [23:15:05] [23:15] Shivam: I think you feel happy😊
-- [23:16:14] [23:16] Shivam: Its thoughtful game🧠
+USERS – request the list of connected users
 
+QUIT – leave the chat
 
+Example messages exchanged between client and server:
 
-- **Server events**: server appends join/leave/start events to `Server/server_log.txt` with timestamps.
-- [22:38:29] Chat server started on the Port:- 8000
-- [22:39:37] Client Connected:- ('127.0.0.1', 12732)
-- [22:39:37] ## Sandeep joined the chat ##
-- [22:40:06] Client Connected:- ('127.0.0.1', 8959)
-- [22:40:06] ## Gaurav joined the chat ##
-- [22:40:50] Client Connected:- ('127.0.0.1', 11801)
-- [22:40:50] ## Shivam joined the chat ##
+JOIN Sandeep
+MSG Hello everyone!
+USERS
+QUIT
+Concurrency Design
 
-## Testing checklist (as required)
+The application uses multithreading.
 
-- **Multiple clients joining**: start 3+ clients with different usernames.
-- **Simultaneous messaging**: type messages in different clients quickly; all others should receive them.
-- **Client disconnection**: use `/quit` and also test closing a client terminal unexpectedly.
-- **Server stability**: keep server running while clients come/go.
-- **Edge cases**:
-  - empty message (client blocks it)
-  - long message \(> 300 chars\) (client blocks it)
+Server Side
+The server continuously listens for new connections.
+When a client connects, a new thread is created to handle communication with that client.
 
-## Notes / known limitations
+Client Side
+The client also uses two threads:
 
-- Server/client currently use a **fixed host/port**:
-  - server: `0.0.0.0:8000`
-  - client: `127.0.0.1:8000`
-  To chat across multiple machines, update the client IP to the server machine’s LAN IP.
+one thread listens for incoming messages from the server
 
-- Messages are read using `recv(1024)`, so extremely long single messages could be split at the TCP level (typical for simple assignments).
+the main thread reads user input and sends messages
 
+This design allows users to send and receive messages at the same time.
+
+Logging and Chat History
+
+The server stores useful information in two files.
+
+Chat History
+
+All chat messages are saved with timestamps.
+
+Example:
+
+[23:04:55] [23:04] Sandeep: Are you Happy😊
+[23:15:05] [23:15] Shivam: I think you feel happy😊
+[23:16:14] [23:16] Shivam: Its thoughtful game🧠
+
+Server Logs
+
+Server events such as connections and joins are also recorded.
+
+Example:
+
+[22:38:29] Chat server started on Port 8000
+[22:39:37] Client Connected: ('127.0.0.1', 12732)
+[22:39:37] ## Sandeep joined the chat ##
+[22:40:06] Client Connected: ('127.0.0.1', 8959)
+[22:40:06] ## Gaurav joined the chat ##
+Testing Performed
+
+The application was tested under several conditions:
+
+Multiple clients connecting to the server
+
+Messages sent from different clients at the same time
+
+Clients leaving the chat normally using /quit
+
+Clients disconnecting unexpectedly
+
+Sending empty messages or very long messages
+
+All these cases worked correctly and the server remained stable during testing.
+The screenshots included in the report show the results of these tests clearly.
+
+Limitations
+
+Currently the application uses fixed addresses:
+
+Server: 0.0.0.0:8000
+
+Client: 127.0.0.1:8000
+
+To run the chat between different machines, the client must use the server machine’s IP address.
+
+Also, messages are read using recv(1024), so extremely long messages could be split at the TCP level.
