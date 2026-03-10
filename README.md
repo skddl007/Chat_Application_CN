@@ -1,10 +1,10 @@
-Chat Application using TCP Sockets
+-- Chat Application using TCP Sockets
 
 This project is a simple multi-client chat application developed using Python socket programming. The application consists of a server and multiple clients. The server handles all connections and message transfers, while the clients connect to the server to send and receive messages.
 
 The goal of this project is to understand how TCP communication works and how multiple users can communicate through a centralized server using sockets and threads.
 
-Working of the Application
+-- Working of the Application
 
 The chat system works on a client–server model. The server first starts and waits for client connections on a specific port. When a client connects, the server assigns a separate thread to handle that client so that multiple users can communicate at the same time.
 
@@ -12,11 +12,11 @@ Each client joins the chat by entering a username. When a user sends a message, 
 
 Because the application uses TCP sockets, the messages are delivered reliably and in the correct order.
 
-Project Files
+-- Project Files
 
 The project is divided into two main parts:
 
-Server
+-- Server
 
 server.py – runs the chat server and manages client connections
 
@@ -24,11 +24,11 @@ chat_history.txt – stores chat messages with timestamps
 
 server_log.txt – records server events such as client connections and joins
 
-Client
+-- Client
 
 client.py – connects to the server and allows users to send and receive messages
 
-Running the Project
+-- Running the Project
 
 Start the server by running:
 
@@ -38,11 +38,11 @@ Open another terminal and start the client:
 
 python Client/client.py
 
-Enter a username when prompted.
+Enter a username.
 
 Multiple clients can be started in different terminals to simulate a group chat.
 
-Client Commands
+-- Client Commands
 
 Send message: type the message and press Enter
 
@@ -50,7 +50,7 @@ Send message: type the message and press Enter
 
 /users – display the list of connected users
 
-Logging
+-- Logging
 
 The server maintains two files:
 
@@ -65,3 +65,4 @@ The application was tested with multiple clients joining the chat simultaneously
 Limitation
 
 Currently the server runs on 0.0.0.0:8000 and the client connects to 127.0.0.1:8000. To run the application on different machines, the client IP must be changed to the server machine’s IP address.
+
