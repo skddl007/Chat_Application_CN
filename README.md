@@ -62,7 +62,4 @@ Testing
 
 The application was tested with multiple clients joining the chat simultaneously. Messages were successfully broadcast to all connected users. Client disconnections were handled correctly, and the server remained stable during testing. The screenshots included in the report show these test results.
 
-Limitation
-
-Currently the server runs on 0.0.0.0:8000 and the client connects to 127.0.0.1:8000. To run the application on different machines, the client IP must be changed to the server machine’s IP address.
 
